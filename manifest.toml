@@ -1,0 +1,108 @@
+packaging_format = 2
+
+id = "example"
+name = "Example app"
+# TODO: Explain in **a few (10-15) words** the the purpose of the app or what it actually does (it is meant to give a rough idea to users browsing a catalog of 100+ apps)
+description.en = "Lorem ipsum dolor sit amet"
+description.fr = "Lorem ipsum dolor sit amet"
+
+version = "1.0~ynh1"
+
+maintainers = ["John doe"]
+
+[upstream]
+# TODO: replace 'free' with the license ID **of the upstream** using the corresponding SPDX identifier: https://spdx.org/licenses/
+license = "free"
+website = "https://example.com"
+demo = "https://demo.example.com"
+# TODO: replace admindoc with a link to the **upstream**, official documentation of the app (or remove this entry entirely is there's none)
+admindoc = "https://yunohost.org/packaging_apps"
+# TODO: replace userdoc with a link to the **upstream**, official documentation of the app (or remove this entry entirely is there's none)
+userdoc = "https://yunohost.org/apps"
+# TODO: replace userdoc with a link to the **upstream** code repository of the app (or remove this entry entirely is there's none)
+code = "https://some.forge.com/example/example"
+
+[integration]
+yunohost = ">= 11.1"
+# TODO: "all" can be replaced with a list of supported archs using the dpkg --print-architecture nomenclature, for example: ["amd64", "i386"]
+architectures = "all" 
+# TODO: or false if the app can't be installed multiple times
+multi_instance = true
+# TODO: replace with true, false, or "not_relevant" (this key corresponds to wether or not the accounts in the app corresponds to yunohost users directly)
+ldap = "?"
+# TODO: replace with true, false, or "not_relevant" (thi key corresponds to wether or not an user will be automatically logged in the app if logged on the yunohost single sign-on user portal)
+sso = "?"
+
+# TODO: replace with an *estimate* minimum value for the disk/ram needed at build time (e.g. during install/upgrade) and during regular usage
+# Please only use round values such as: 10M, 100M, 200M, 400M, 800M, 1G, 2G, 4G, 8G
+disk = "50M"
+ram.build = "1G"      
+ram.runtime = "10M"   
+ram.include_swap = false
+
+
+[install]
+    [install.domain]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "domain"
+
+    [install.path]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "path"
+
+    [install.init_main_permission]
+    # this is (to become) a generic question - ask strings are automatically handled by Yunohost's core
+    ask.en = "Who should have access to this application ? (This can later be changed in the webadmin)"
+    type = "group"
+    default = "visitors"
+
+    [install.init_admin_permission]
+    # this is (to become) a generic question - ask strings are automatically handled by Yunohost's core
+    ask.en = "Choose an admin user for this application ? (This can later be changed in the webadmin)"
+    type = "user"
+
+    [install.language]
+    ask.en = "Choose the application language"
+    ask.fr = "Choisissez la langue de l'application"
+    type = "string"
+    choices = ["fr", "en"]
+    default = "fr"
+
+    [install.password]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    help.en = "Use the help field to add an information for the admin about this question."
+    help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
+    type = "password"
+
+[resources]
+
+    [resources.system_user]
+    
+    [resources.install_dir]
+    alias = "final_path"
+ 
+    [resources.data_dir]
+    alias = "datadir"
+
+    [resources.port]
+    default = 8095
+    #expose = True  # Ports are usually only internal, meant for reverse-proxying, and therefore should not be publicly exposed
+
+    [resources.permissions]
+    main.url = "/"
+    
+    admin.url = "/admin"
+    admin.show_tile = false
+    
+    api.url = "/api"
+    api.allowed = "visitors"
+    api.protected = true
+
+    [resources.apt]
+    packages = "nyancat, sl"
+
+    #    [[resources.apt.extra]]
+    #    repo = "deb https://dl.yarnpkg.com/debian/ stable main"
+    #    key = "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    #    packages = "yarn"
+
